@@ -1,6 +1,8 @@
 #! /usr/bin/env python2
 from SimpleHTTPServer import SimpleHTTPRequestHandler
 import BaseHTTPServer
+import os
+#print os.environ['trelloapikey']
 
 class CORSRequestHandler (SimpleHTTPRequestHandler):
     def end_headers (self):
