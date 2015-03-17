@@ -1,25 +1,50 @@
-var onAutorize = function() {
-  Trello.rest("GET","boards/532169c1348424717a6298f5/lists/", function(lister){
+function pad(str, max) {
+  str = str.toString();
+  return str.length < max ? pad("0" + str, max) : str;
+}
 
-    $.each(lister, function(indx, liste){
+var getStatus = function(board) {
+	board ="boards/" + board + "/lists/";
 
+  Trello.rest("GET", board, function(
+    lister) {
+    $("#lister").empty();
 
-      $("#lister").append("<h2>"+ liste.name +"</h2><div id='" + liste.id + "'></div>");
+    $.each(lister, function(indx, liste) {
 
-      Trello.rest("GET","lists/" + liste.id + "/cards", function(cards){
-
-        $.each( cards, function(indx, card){
-          $("#"+liste.id).append("<h3>" + card.name + "</h3>");
-          if (card.due != null ) {
-            $("#"+liste.id).append("<p class='frist'>Frist: <span class='dato'> " + moment(card.due, "YYYY-MM-DDTHH:mm:ssZ").format("D. MMM YYYY") + "</span></p>");
+      Trello.rest("GET", "lists/" + liste.id + "/cards", function(
+        cards) {
+          $("#lister")
+          .append("<h2>" + liste.name + "</h2>")
+          if (cards.length>0){
+            $("#lister").append("<table id='" + liste.id + "'  class='table table-striped table-bordered table-hover'></table>");
+            $("#" + liste.id).append("<tr><th>id</th><th>Beskrivelse</th><th>Labels</th><th>Frist</th></tr>");
           }
-          $("#"+liste.id).append("<div id=" + card.id + " class='beskrivelse'></div>");
-          $("#"+card.id ).append(marked(card.desc) );
-          $.each( card.labels , function (indx, label){
-            $("#"+liste.id).append("<p class='trello-label " + label.color + "'>" + label.name + "</p>")
+
+        $.each(cards, function(indx, card) {
+          $("#" + liste.id).append(
+            "<tr id='" + card.id + "'>" +
+            "<td id='tekst-" + card.id +
+            "' class='kortliste'><a href='" + card.url + "'>" + pad(card.idShort, 3) +
+            "</a></td>" +
+            "<td class='kortliste'>" + card.name + "</td>" +
+            "<td class='kortliste' id='label-" + card.id +
+            "' ></td>" +
+            "<td class='kortliste' id='due-" + card.id +
+            "' ></td>" +
+            "</tr>");
+          if (card.due !== null) {
+            var due = moment(card.due, "YYYY-MM-DDTHH:mm:ssZ")
+              .format("D. MMM YYYY");
+            $("#due-" + card.id).append(
+              "<div class='frist'>Frist: <span class='dato'> " +
+              due + "</span></div>");
+          }
+          $.each(card.labels, function(indx, label) {
+            $("#label-" + card.id).append(
+              "<div class='trello-label " + label.color +
+              "'>" + label.name + "</div>")
           });
-
-
         });
       });
     });
@@ -27,14 +52,56 @@ var onAutorize = function() {
 };
 
 
-var onError = function(){
-  alert("Error");
+var loginFailed = function() {
+  $("#statustext").empty();
+  $("#statustext").append("Login failed");
 };
 
-$("#get-board").click(function(){
-  Trello.authorize({name: "TrelloExport", type: "popup", success: onAutorize, error: onError, account:true  })
+function loggedIn() {
+  $("#statustext").empty();
+	$("#statustext").append("Logged in");
+}
+
+$("#login").click(function() {
+  Trello.authorize({
+    name: "TrelloExport",
+    type: "popup",
+    persist: true,
+    success: loggedIn,
+    error: loginFailed,
+    account: true,
+  })
 });
 
-$("#logout").click(function(){
-  Trello.deauthorize();
+$("#get-1-4").click(function() {
+  getStatus("xabSsOoT");
+  $("#boardname").empty();
+  $("#boardname").append("DataInn 1.4");
 });
+$("#get-2-0").click(function() {
+  getStatus("01otQ38f");
+  $("#boardname").empty();
+  $("#boardname").append("DataInn 2.0");
+});
+$("#get-nvdb").click(function() {
+  getStatus("O9c7RpRq");
+  $("#boardname").empty();
+  $("#boardname").append("&Aring;pne vegdata produktk&oslash;");
+});
+
+$("#logout").click(function() {
+  Trello.deauthorize();
+  $("#statustext").empty();
+  $("#statustext").append("Not logged in");
+});
+
+Trello.authorize({
+  name: "TrelloExport",
+  type: "popup",
+  interactive: false,
+  persist: true,
+  success: loggedIn,
+  error: loginFailed,
+  account: true
+
+})

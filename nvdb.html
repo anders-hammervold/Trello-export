@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+</head>
+<body>
+<div class="container">
+    <button id="get-nvdb" class="btn btn-info">&Aring;pne Vegdata</button>
+    <button id="login" class="btn btn-success">Logg inn</button>
+    <button id="logout" class="btn btn-warning">Logg ut</button>
+    <div id="statustext"></div>
+    <h1 id="boardname"></h1>
+    <div id="lister">
+    </div>
+    <div class="footer">
+        Denne listen er generert via skript basert p&aring; informasjon som ligger i prosjektets Trello-tavle.
+    </div>
+    <div></div>
+</div>
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script src="https://api.trello.com/1/client.js?key=fc8788bd71d9482a501fe6284b9d74fd"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
