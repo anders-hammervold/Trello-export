@@ -1,6 +1,6 @@
 #! /usr/bin/env python2
 from SimpleHTTPServer import SimpleHTTPRequestHandler
-import BaseHTTPServer
+import BaseHTTPServer as bhs
 import os
 #print os.environ['trelloapikey']
 
@@ -10,4 +10,5 @@ class CORSRequestHandler (SimpleHTTPRequestHandler):
         SimpleHTTPRequestHandler.end_headers(self)
 
 if __name__ == '__main__':
-    BaseHTTPServer.test(CORSRequestHandler, BaseHTTPServer.HTTPServer)
+    bhs.HTTPServer(("127.0.0.1", 80), CORSRequestHandler).serve_forever()
+    #BaseHTTPServer.test(CORSRequestHandler, BaseHTTPServer.HTTPServer)
