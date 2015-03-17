@@ -10,5 +10,7 @@ class CORSRequestHandler (SimpleHTTPRequestHandler):
         SimpleHTTPRequestHandler.end_headers(self)
 
 if __name__ == '__main__':
-    bhs.HTTPServer(("127.0.0.1", 80), CORSRequestHandler).serve_forever()
+    # Bind to PORT if defined, otherwise default to 5000.
+    port = int(os.environ.get('PORT', 5000))
+    bhs.HTTPServer(("", port), CORSRequestHandler).serve_forever()
     #BaseHTTPServer.test(CORSRequestHandler, BaseHTTPServer.HTTPServer)
