@@ -11,7 +11,7 @@ var getStatus = function(board) {
     $.each(lister, function(indx, liste) {
         $("#lister")
             .append("<h2>" + liste.name + "</h2>")
-              $("#lister").append("<table id='" + liste.id + "'  class='table table-striped table-bordered table-hover'></table>");
+              $("#lister").append("<table id='" + liste.id + "'  class='table table-striped table-hover'></table>");
               $("#" + liste.id).append("<tr><th>id</th><th>Beskrivelse</th><th>Labels</th><th>Frist</th></tr>");
 
 
@@ -50,26 +50,6 @@ var getStatus = function(board) {
   });
 };
 
-var loginFailed = function() {
-  $("#statustext").empty();
-  $("#statustext").append("Login failed");
-};
-
-function loggedIn() {
-  $("#statustext").empty();
-	$("#statustext").append("Logged in");
-}
-
-$("#login").click(function() {
-  Trello.authorize({
-    name: "TrelloExport",
-    type: "popup",
-    persist: true,
-    success: loggedIn,
-    error: loginFailed,
-    account: true,
-  })
-});
 
 $("#get-1-4").click(function() {
   getStatus("xabSsOoT");
@@ -92,20 +72,3 @@ $("#get-nvdb").click(function() {
   $("#boardname").empty();
   $("#boardname").append("&Aring;pne vegdata produktk&oslash;");
 });
-
-$("#logout").click(function() {
-  Trello.deauthorize();
-  $("#statustext").empty();
-  $("#statustext").append("Not logged in");
-});
-
-Trello.authorize({
-  name: "TrelloExport",
-  type: "popup",
-  interactive: false,
-  persist: true,
-  success: loggedIn,
-  error: loginFailed,
-  account: true
-
-})

@@ -11,9 +11,7 @@
 </head>
 <body>
 <script id="list-template" type="text/template">
-    {{#list}}
-    <li>{{title}}</li>
-    {{/list}}
+    <ul> {{#.}} <li>name:{{name}}  </li> {{/.}} </ul>
 </script>
 <div class="container">
     <button id="get-1-4" class="btn btn-info">1.4</button>
@@ -28,6 +26,19 @@
     <div></div>
 </div>
 <script src="js/logincheck.js"></script>
-<script src="js/app.js"></script>
+
+<script>
+var board = "01otQ38f";
+board = "boards/" + board + "/lists/";
+Trello.rest("GET", board, function(lister) {
+
+
+		    var template = $('#list-template').html();
+		    var info = Mustache.to_html(template, lister);
+		    $('#lister').html(info);
+
+	});
+</script>
+
 </body>
 </html>
