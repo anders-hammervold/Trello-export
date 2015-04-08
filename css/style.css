@@ -43,10 +43,9 @@ h3 {
     margin: 0 4px;
     padding-left: 4px;
     padding-right: 4px;
-    border-radius: 1em;
+    border-radius: 2px;
     font-weight: bold;
     float: left;
-
 }
 
 .footer {
