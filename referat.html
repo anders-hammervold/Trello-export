@@ -11,6 +11,7 @@
 
 
     <script src="js/moment.js"></script>
+    <script src="js/showdown.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.0/mustache.min.js"></script>
     <script src="https://api.trello.com/1/client.js?key=fc8788bd71d9482a501fe6284b9d74fd"></script>
 </head>
@@ -21,28 +22,25 @@
         background: white;
         line-height: 1.25;
         max-height:180px;
-    max-width:100%;
-    padding: 0;
-    margin: 0 0 0;
-    }
-    h2 {
-        margin-left: -15px; <!-- WTF: hvorfor trenger jeg denne? -->
+        max-width:100%;
+        padding: 0;
+        margin: 0 0 0;
     }
 
 </style>
 <script id="list-template" type="text/template">
     {{#.}}
         <div class="row" ><h2 data-id="{{id}}" id="{{id}}" >{{name}}</h2></div>
-        <div class="row" id="kort_{{id}}">Ingen saker registrert</div>
+        <div class="" id="kort_{{id}}">Ingen saker registrert</div>
     {{/.}}
 </script>
 <script id="kort-template" type="text/template">
     {{#.}} <div class="row"><h4>Sak {{idShort}}: {{name}}&nbsp;
         <a href="{{shortUrl}}"><span title="trykk for &aring; g&aring; til saken" class="glyphicon glyphicon-link"></span></a></h4>   </div>
-        <div class="row"  id="kortcontent_{{id}}"><pre class="beskrivelse pre-scrollable">{{desc}}</pre></div>
+        <div class="row"  id="kortcontent_{{id}}"><div class="beskrivelse pre-scrollable">{{{descHtml}}}</div></div>
     {{/.}}
 </script>
-<div class="container">
+<div class="container container-fluid">
     <h1 id="boardname"></h1>
     <div id="lister"></div>
     <div class="row footer">
@@ -83,12 +81,18 @@ var hentKortForLister = function (lister) {
 };
 
 var visKort=function (kort, listeId) {
-    		    var template = $('#kort-template').html();
-    		    var info = Mustache.to_html(template, kort);
-    		    var div="#kort_" + listeId;
+    if (kort.length>0) {
+        var converter = new showdown.Converter();
+        var template = $('#kort-template').html();
 
-    		    $(div).empty();
-    		    $(div).html(info);
+        kort.forEach(function (enkeltkort, index, ar) { enkeltkort.descHtml=converter.makeHtml(enkeltkort.desc); });
+
+        var div="#kort_" + listeId;
+        var info = Mustache.to_html(template, kort);
+
+        $(div).empty();
+        $(div).html(info);
+    }
 };
 
  Trello.authorize({
