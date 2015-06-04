@@ -1,81 +1,94 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <title>Trello rapport</title>
+
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+    <script src="js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+
+
     <script src="js/moment.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.0/mustache.min.js"></script>
     <script src="https://api.trello.com/1/client.js?key=fc8788bd71d9482a501fe6284b9d74fd"></script>
 </head>
 <body>
+<style>
+    .beskrivelse {
+        border: 0px;
+        background: white;
+        line-height: 1.25;
+        max-height:180px;
+    padding: 0;
+    margin: 0 0 0;
+    }
+    h2 {
+        margin-left: -15px; <!-- WTF: hvorfor trenger jeg denne? -->
+    }
+
+</style>
 <script id="list-template" type="text/template">
     {{#.}}
-        <div class="row"><h3 data-id="{{id}}" id="{{id}}" onclick="hentKort($(this))">{{name}}</h3></div>
-        <div class="row" id="kort_{{id}}">
-            Panel content</div>
+        <div class="row" ><h2 data-id="{{id}}" id="{{id}}" >{{name}}</h2></div>
+        <div class="row" id="kort_{{id}}">Ingen saker registrert</div>
     {{/.}}
 </script>
 <script id="kort-template" type="text/template">
-    {{#.}} <h5>{{name}} </h5>
-    <div>
-        <div id="kortcontent_{{id}}">ingen informasjon om kortet</div>
-    </div>
+    {{#.}} <div class="row"><h4>Sak {{idShort}}: {{name}}&nbsp;
+        <a href="{{shortUrl}}"><span title="trykk for &aring; g&aring; til saken" class="glyphicon glyphicon-link"></span></a></h4>   </div>
+        <div class="row"  id="kortcontent_{{id}}"><pre class="beskrivelse pre-scrollable">{{desc}}</pre></div>
     {{/.}}
 </script>
 <div class="container">
-    <button id="hentData" class="btn btn-info">Get</button>
     <h1 id="boardname"></h1>
-    <div id="lister">
-    </div>
-    <div class="footer">
-        Referat genereres basert p&aring; styrets trello-tavle
+    <div id="lister"></div>
+    <div class="row footer">
+        Referat genereres basert p&aring; trello-tavle
     </div>
     <div></div>
 </div>
-<script language="JavaScript">
+<script language="javascript">
 
 var key="fc8788bd71d9482a501fe6284b9d74fd";
-var board  = "h2uUrdxW";
+var board  = "h2uUrdxW"; //Utleira Styre
+var queryBoard=getUrlVars()["board"];
+if (queryBoard!=undefined) {
+    board=queryBoard;
+}
+
 var token="";
 
 
-    var loginFailed = function() {
-        window.alert("Pålogging feilet. Prøv igjen.");
-    };
-
+var loginFailed = function() {
+    window.alert("Pålogging feilet. Prøv igjen.");
+};
 
 var visLister=function (lister) {
     		    var template = $('#list-template').html();
     		    var info = Mustache.to_html(template, lister);
     		    $('#lister').html(info);
+    		    hentKortForLister(lister);
 };
+
+var hentKortForLister = function (lister) {
+    lister.forEach( function (item) {
+        var listName=item.name;
+        var listId=item.id;
+        var cmdboard = "lists/" + listId + "/cards/";
+        Trello.rest("GET", cmdboard,function (kortListe) { visKort(kortListe,listId); } );
+    });
+};
+
 var visKort=function (kort, listeId) {
     		    var template = $('#kort-template').html();
     		    var info = Mustache.to_html(template, kort);
     		    var div="#kort_" + listeId;
+
     		    $(div).empty();
     		    $(div).html(info);
 };
-
-var hentTavle = function () {
-    var cmdboard = "boards/" + board  + "/lists/";
-    Trello.rest("GET", cmdboard, visLister);
-};
-
-var hentKort = function (btn) {
-    var id=btn.attr("id");
-    var cmdboard = "lists/" + id + "/cards/";
-    Trello.rest("GET", cmdboard,function (kort) { visKort(kort,id); } );
-};
-
-$("#hentData").click(function() {
-  $("#boardname").empty();
-  hentTavle();
-});
-
 
  Trello.authorize({
       name: "TrelloExport",
@@ -86,9 +99,25 @@ $("#hentData").click(function() {
       account: true,
       success: function(){
                 token = Trello.token();
-        }
+                var cmdboard = "boards/" + board  + "/lists/";
+                Trello.rest("GET", cmdboard, visLister);
+                }
     });
-  
+
+// Read a page's GET URL variables and return them as an associative array.
+function getUrlVars()
+{
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
+}
+
 </script>
 
 </body>
