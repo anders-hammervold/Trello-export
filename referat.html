@@ -17,15 +17,6 @@
 </head>
 <body>
 <style>
-    .beskrivelse {
-        border: 0px;
-        background: white;
-        line-height: 1.25;
-        max-height:180px;
-        max-width:100%;
-        padding: 0;
-        margin: 0 0 0;
-    }
 
 </style>
 <script id="list-template" type="text/template">
@@ -36,8 +27,11 @@
 </script>
 <script id="kort-template" type="text/template">
     {{#.}} <div class="row"><h4>Sak {{idShort}}: {{name}}&nbsp;
-        <a href="{{shortUrl}}"><span title="trykk for &aring; g&aring; til saken" class="glyphicon glyphicon-link"></span></a></h4>   </div>
-        <div class="row"  id="kortcontent_{{id}}"><div class="beskrivelse pre-scrollable">{{{descHtml}}}</div></div>
+        <a href="{{shortUrl}}"><span title="trykk for &aring; g&aring; til saken" class="glyphicon glyphicon-link trello-sak-link"></span></a></h4>   </div>
+        <div class="row"  id="kortcontent_name_{{id}}"><div class="text-info">{{{membersName}}}</div>
+            {{#labels}}<span class="trello-label {{color}}">{{name}}</span>{{/labels}}
+        </div>
+        <div class="row"  id="kortcontent_{{id}}"><div class="beskrivelse">{{{descHtml}}}</div></div>
     {{/.}}
 </script>
 <div class="container container-fluid">
@@ -49,9 +43,10 @@
     <div></div>
 </div>
 <script language="javascript">
-
 var key="fc8788bd71d9482a501fe6284b9d74fd";
 var board  = "h2uUrdxW"; //Utleira Styre
+var boardMembers;
+
 var queryBoard=getUrlVars()["board"];
 if (queryBoard!=undefined) {
     board=queryBoard;
@@ -62,6 +57,10 @@ var token="";
 
 var loginFailed = function() {
     window.alert("Pålogging feilet. Prøv igjen.");
+};
+
+var error = function() {
+    window.alert("Feil oppstod feilet. Prøv igjen.");
 };
 
 var visLister=function (lister) {
@@ -85,7 +84,10 @@ var visKort=function (kort, listeId) {
         var converter = new showdown.Converter();
         var template = $('#kort-template').html();
 
-        kort.forEach(function (enkeltkort, index, ar) { enkeltkort.descHtml=converter.makeHtml(enkeltkort.desc); });
+        kort.forEach(function (enkeltkort, index, ar) {
+            enkeltkort.descHtml=converter.makeHtml(enkeltkort.desc);
+            settAnsvarlige(enkeltkort);
+            });
 
         var div="#kort_" + listeId;
         var info = Mustache.to_html(template, kort);
@@ -94,6 +96,20 @@ var visKort=function (kort, listeId) {
         $(div).html(info);
     }
 };
+
+function settAnsvarlige(enkeltkort) {
+    var ansvarligeFullName=[];
+    enkeltkort.idMembers.forEach(function (id,index,ar) {
+        var ansvarlige=boardMembers.filter(function (member) {
+            return (member.id==id);
+        });
+        ansvarligeFullName.push(ansvarlige.map(function (obj){
+                return obj.fullName
+            }));
+    });
+    enkeltkort.membersName=ansvarligeFullName.join(', ');
+};
+
 
  Trello.authorize({
       name: "TrelloExport",
@@ -104,6 +120,7 @@ var visKort=function (kort, listeId) {
       account: true,
       success: function(){
                 token = Trello.token();
+                getBoardMembers(board);
                 var cmdboard = "boards/" + board  + "/lists/";
                 Trello.rest("GET", cmdboard, visLister);
                 }
@@ -122,6 +139,16 @@ function getUrlVars()
     }
     return vars;
 }
+
+
+
+function getBoardMembers(boardId) {
+    var url="boards/" + boardId + "/members/";
+    Trello.rest("GET", url, function (medlemmer) {
+        boardMembers=medlemmer;
+        });
+}
+
 
 </script>
 
