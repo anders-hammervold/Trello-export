@@ -6,6 +6,9 @@ body {
 .trello-sak-link {
     float:right;
 }
+.trello-member {
+    float:left;
+}
 .dato {
     text-transform: lowercase;
 }

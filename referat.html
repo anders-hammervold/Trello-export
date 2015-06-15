@@ -12,8 +12,11 @@
 
     <script src="js/moment.js"></script>
     <script src="js/showdown.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.0/mustache.min.js"></script>
     <script src="https://api.trello.com/1/client.js?key=fc8788bd71d9482a501fe6284b9d74fd"></script>
+
+    <script src="js/referat.js"></script>
 </head>
 <body>
 <style>
@@ -29,7 +32,7 @@
     {{#.}} <div class="row"><h2>Sak {{idShort}}: {{name}}&nbsp;
         <a href="{{shortUrl}}"><span title="trykk for &aring; g&aring; til saken" class="glyphicon glyphicon-link trello-sak-link"></span></a></h2>   </div>
         <div class="row"  id="kortcontent_name_{{id}}">
-            <span class="text-info trello-member">{{{membersName}}}</span>
+            <ul class="trello-member">{{#fullNames}}<li>{{.}}</li>{{/fullNames}}</ul>
             {{#labels}}<span class="trello-label {{color}}">{{name}}</span>{{/labels}}
         </div>
 
@@ -44,74 +47,6 @@
     <div></div>
 </div>
 <script language="javascript">
-var key="fc8788bd71d9482a501fe6284b9d74fd";
-var board  = "h2uUrdxW"; //Utleira Styre
-var boardMembers;
-
-var queryBoard=getUrlVars()["board"];
-if (queryBoard!=undefined) {
-    board=queryBoard;
-}
-
-var token="";
-
-
-var loginFailed = function() {
-    window.alert("Pålogging feilet. Prøv igjen.");
-};
-
-var error = function() {
-    window.alert("Feil oppstod feilet. Prøv igjen.");
-};
-
-var visLister=function (lister) {
-    		    var template = $('#list-template').html();
-    		    var info = Mustache.to_html(template, lister);
-    		    $('#lister').html(info);
-    		    hentKortForLister(lister);
-};
-
-var hentKortForLister = function (lister) {
-    lister.forEach( function (item) {
-        var listName=item.name;
-        var listId=item.id;
-        var cmdboard = "lists/" + listId + "/cards/";
-        Trello.rest("GET", cmdboard,function (kortListe) { visKort(kortListe,listId); } );
-    });
-};
-
-var visKort=function (kort, listeId) {
-    if (kort.length>0) {
-        var converter = new showdown.Converter();
-        var template = $('#kort-template').html();
-
-        kort.forEach(function (enkeltkort, index, ar) {
-            enkeltkort.descHtml=converter.makeHtml(enkeltkort.desc);
-            settAnsvarlige(enkeltkort);
-            });
-
-        var div="#kort_" + listeId;
-        var info = Mustache.to_html(template, kort);
-
-        $(div).empty();
-        $(div).html(info);
-    }
-};
-
-function settAnsvarlige(enkeltkort) {
-    var ansvarligeFullName=[];
-    enkeltkort.idMembers.forEach(function (id,index,ar) {
-        var ansvarlige=boardMembers.filter(function (member) {
-            return (member.id==id);
-        });
-        ansvarligeFullName.push(ansvarlige.map(function (obj){
-                return obj.fullName
-            }));
-    });
-    enkeltkort.membersName=ansvarligeFullName.join(', ');
-};
-
-
  Trello.authorize({
       name: "TrelloExport",
       type: "popup",
@@ -126,30 +61,6 @@ function settAnsvarlige(enkeltkort) {
                 Trello.rest("GET", cmdboard, visLister);
                 }
     });
-
-// Read a page's GET URL variables and return them as an associative array.
-function getUrlVars()
-{
-    var vars = [], hash;
-    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-    for(var i = 0; i < hashes.length; i++)
-    {
-        hash = hashes[i].split('=');
-        vars.push(hash[0]);
-        vars[hash[0]] = hash[1];
-    }
-    return vars;
-}
-
-
-
-function getBoardMembers(boardId) {
-    var url="boards/" + boardId + "/members/";
-    Trello.rest("GET", url, function (medlemmer) {
-        boardMembers=medlemmer;
-        });
-}
-
 
 </script>
 
