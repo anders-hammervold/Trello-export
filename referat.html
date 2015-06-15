@@ -32,10 +32,9 @@
     {{#.}} <div class="row"><h2>Sak {{idShort}}: {{name}}&nbsp;
         <a href="{{shortUrl}}"><span title="trykk for &aring; g&aring; til saken" class="glyphicon glyphicon-link trello-sak-link"></span></a></h2>   </div>
         <div class="row"  id="kortcontent_name_{{id}}">
-            <ul class="trello-member">{{#fullNames}}<li>{{.}}</li>{{/fullNames}}</ul>
-            {{#labels}}<span class="trello-label {{color}}">{{name}}</span>{{/labels}}
+            <ul class="trello-member-list">{{#fullNames}}<li class="trello-member">{{.}}</li>{{/fullNames}}</ul>
+            <ul class="trello-label-list">{{#labels}}<li class="trello-label {{color}}">{{name}}</li>{{/labels}}</ul>
         </div>
-
         <div class="row"  id="kortcontent_{{id}}"><div class="beskrivelse">{{{descHtml}}}</div></div>
     {{/.}}
 </script>

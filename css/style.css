@@ -6,8 +6,28 @@ body {
 .trello-sak-link {
     float:right;
 }
-.trello-member {
+.trello-member-list {
     float:left;
+    list-style-type: none;
+    padding-start:0px;
+    -webkit-padding-start: 0px;
+}
+li.trello-member {
+    display:inline;
+    font-weight:bold;
+}
+li.trello-member:first-child:before {
+    content: "Ansvarlig: ";
+    }
+li.trello-member:after {
+    content: ", ";
+    }
+li.trello-member:last-child:after {
+    content: "";
+    }
+.trello-label-list {
+    float:right;
+    list-style-type: none;
 }
 .dato {
     text-transform: lowercase;
@@ -59,7 +79,6 @@ h3 {
     padding-left: 4px;
     padding-right: 4px;
     border-radius: 2px;
-
     float: right;
 }
 
