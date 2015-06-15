@@ -32,9 +32,14 @@ li.trello-member:last-child:after {
 .dato {
     text-transform: lowercase;
 }
-.beskrivelse h2 {
+.beskrivelse h1 {
     font-size: 20px;
     padding-top: 5px;
+    border-bottom:0px;
+}
+.beskrivelse h2 {
+    font-size: 18px;
+    padding-top: 2px;
 }
 .beskrivelse h3 {
     font-size: 16px;
