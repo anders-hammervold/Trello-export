@@ -21,13 +21,13 @@
 </style>
 <script id="list-template" type="text/template">
     {{#.}}
-        <div class="row" ><h2 data-id="{{id}}" id="{{id}}" >{{name}}</h2></div>
+        <div class="row" ><h1 data-id="{{id}}" id="{{id}}" >{{name}}</h1></div>
         <div class="" id="kort_{{id}}">Ingen saker registrert</div>
     {{/.}}
 </script>
 <script id="kort-template" type="text/template">
-    {{#.}} <div class="row"><h4>Sak {{idShort}}: {{name}}&nbsp;
-        <a href="{{shortUrl}}"><span title="trykk for &aring; g&aring; til saken" class="glyphicon glyphicon-link trello-sak-link"></span></a></h4>   </div>
+    {{#.}} <div class="row"><h2>Sak {{idShort}}: {{name}}&nbsp;
+        <a href="{{shortUrl}}"><span title="trykk for &aring; g&aring; til saken" class="glyphicon glyphicon-link trello-sak-link"></span></a></h2>   </div>
         <div class="row"  id="kortcontent_name_{{id}}"><div class="text-info">{{{membersName}}}</div>
             {{#labels}}<span class="trello-label {{color}}">{{name}}</span>{{/labels}}
         </div>
@@ -35,7 +35,6 @@
     {{/.}}
 </script>
 <div class="container container-fluid">
-    <h1 id="boardname"></h1>
     <div id="lister"></div>
     <div class="row footer">
         Referat genereres basert p&aring; trello-tavle

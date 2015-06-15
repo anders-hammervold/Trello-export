@@ -9,12 +9,21 @@ body {
 .dato {
     text-transform: lowercase;
 }
+.beskrivelse h2 {
+    font-size: 20px;
+    padding-top: 5px;
+}
+.beskrivelse h3 {
+    font-size: 16px;
+    padding-top: 2px;
+}
 
+h1 {
+    border-bottom: solid 1px;
+}
 h2 {
     clear: both;
-    border-bottom: solid 1px;
-    /* margin-bottom: -10px; */
-    padding-top: 25px;
+    font-size:24px;
 }
 h3 {
     float: left;
