@@ -28,9 +28,11 @@
 <script id="kort-template" type="text/template">
     {{#.}} <div class="row"><h2>Sak {{idShort}}: {{name}}&nbsp;
         <a href="{{shortUrl}}"><span title="trykk for &aring; g&aring; til saken" class="glyphicon glyphicon-link trello-sak-link"></span></a></h2>   </div>
-        <div class="row"  id="kortcontent_name_{{id}}"><div class="text-info">{{{membersName}}}</div>
+        <div class="row"  id="kortcontent_name_{{id}}">
+            <span class="text-info trello-member">{{{membersName}}}</span>
             {{#labels}}<span class="trello-label {{color}}">{{name}}</span>{{/labels}}
         </div>
+
         <div class="row"  id="kortcontent_{{id}}"><div class="beskrivelse">{{{descHtml}}}</div></div>
     {{/.}}
 </script>
