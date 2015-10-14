@@ -46,6 +46,11 @@
     <div></div>
 </div>
 <script language="javascript">
+var loginFailed = function() {
+  window.location.href = "index.html";
+};
+
+
  Trello.authorize({
       name: "TrelloExport",
       type: "popup",

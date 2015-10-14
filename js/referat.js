@@ -15,7 +15,7 @@ var loginFailed = function() {
 };
 
 var error = function() {
-    window.alert("Feil oppstod feilet. Prøv igjen.");
+    window.alert("Feil oppstod. Prøv igjen.");
 };
 
 var visLister=function (lister) {
