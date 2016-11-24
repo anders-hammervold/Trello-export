@@ -1,5 +1,5 @@
 var key="fc8788bd71d9482a501fe6284b9d74fd";
-var board  = "h2uUrdxW"; //Utleira Styre
+var board  = "GWYfYddv"; 
 var boardMembers;
 
 var queryBoard=getUrlVars()["board"];
@@ -9,14 +9,19 @@ if (queryBoard!=undefined) {
 
 var token="";
 
-
-var loginFailed = function() {
-    window.alert("Pålogging feilet. Prøv igjen.");
+var onError = function(){
+  alert("Error");
 };
 
-var error = function() {
-    window.alert("Feil oppstod. Prøv igjen.");
-};
+
+$("#hent").click(function(){
+  Trello.authorize({name: "TrelloExport", type: "popup", success: queryBoard, error: onError, account:true  })
+});
+
+$("#log-out").click(function(){
+  Trello.deauthorize();
+});
+
 
 var visLister=function (lister) {
     		    var template = $('#list-template').html();
