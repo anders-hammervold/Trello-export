@@ -26,8 +26,10 @@ li.trello-member:last-child:after {
     content: "";
     }
 .trello-label-list {
-    float:right;
+    float:left;
     list-style-type: none;
+    -webkit-margin-start: 0em;
+    -webkit-padding-start: 0px;
 }
 .dato {
     text-transform: lowercase;
@@ -84,7 +86,7 @@ h3 {
     padding-left: 4px;
     padding-right: 4px;
     border-radius: 2px;
-    float: right;
+    float: left;
 }
 
 .footer {

@@ -46,6 +46,9 @@ var visKort=function (kortListe, listeId) {
 
         kortListe.forEach(function (enkeltkort, index, ar) {
             enkeltkort.descHtml=converter.makeHtml(enkeltkort.desc);
+            if (enkeltkort.descHtml.length===0) {
+                enkeltkort.descHtml="&lt;Ingen informasjon registrert&gt;"
+            }
             setMembersFullnames(enkeltkort);
         });
 
