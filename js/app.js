@@ -50,25 +50,21 @@ var getStatus = function(board) {
   });
 };
 
+var onAutorize = function() {
+  getStatus("GWYfYddv");
+  $("#boardname").empty();
+  $("#boardname").append("SALG");
+}
 
-$("#get-1-4").click(function() {
-  getStatus("xabSsOoT");
-  $("#boardname").empty();
-  $("#boardname").append("DataInn 1.4");
-});
-$("#get-2-0").click(function() {
-  getStatus("01otQ38f");
-  $("#boardname").empty();
-  $("#boardname").append("DataInn 2.0");
-});
-$("#get-risiko").click(function() {
-  getStatus("QVNxzP7g");
-  $("#boardname").empty();
-  $("#boardname").append("DataInn Risikostyring");
+var onError = function(){
+  alert("Error");
+};
+
+
+$("#hent").click(function(){
+  Trello.authorize({name: "TrelloExport", type: "popup", success: onAutorize, error: onError, account:true  })
 });
 
-$("#get-nvdb").click(function() {
-  getStatus("O9c7RpRq");
-  $("#boardname").empty();
-  $("#boardname").append("&Aring;pne vegdata produktk&oslash;");
+$("#log-out").click(function(){
+  Trello.deauthorize();
 });
