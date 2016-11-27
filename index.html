@@ -32,7 +32,7 @@
         <a class="hidden-print" href="{{shortUrl}}"><span title="trykk for &aring; g&aring; til saken" class="glyphicon glyphicon-link trello-sak-link hidden-print"></span></a></h2>   </div>
         <div class="row"  id="kortcontent_name_{{id}}">
             <ul class="trello-member-list">{{#fullNames}}<li class="trello-member">{{.}}</li>{{/fullNames}}</ul>
-            <ul class="trello-label-list">{{#labels}}<li class="trello-label {{color}}">{{name}}</li>{{/labels}}</ul>
+            <div class="trello-label-list">{{#labels}}<span class="trello-label {{color}}">&nbsp;{{name}}&nbsp;</span>&nbsp;{{/labels}}</div>
         </div>
         <div class="row"  id="kortcontent_{{id}}"><div class="beskrivelse">{{{descHtml}}}</div></div>
     {{/.}}
