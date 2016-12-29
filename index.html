@@ -2,14 +2,9 @@
 <html>
 <head>
     <title></title>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/bundle.css">
     
     <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
-
-    <script src="js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
 
 
     <script src="js/moment.js"></script>
@@ -23,31 +18,36 @@
 <body>
 <script id="list-template" type="text/template">
     {{#.}}
-        <div class="row" ><h1 data-id="{{id}}" id="{{id}}" >{{name}}</h1></div>
-        <div class="" id="kort_{{id}}">Ingen saker registrert</div>
+        <header class="t-sectionHeader"><span data-id="{{id}}" id="{{id}}">{{name}}</span></header>
+        <p id="kort_{{id}}">Ingen saker registrert</p>
     {{/.}}
 </script>
 <script id="kort-template" type="text/template">
-    {{#.}} <div class="row"><h2>Sak {{idShort}}: {{name}}&nbsp;
-        <a class="hidden-print" href="{{shortUrl}}"><span title="trykk for &aring; g&aring; til saken" class="glyphicon glyphicon-link trello-sak-link hidden-print"></span></a></h2>   </div>
+    {{#.}} <div class="row"><h2 class="h2">Sak {{idShort}}: {{name}}&nbsp;
+        <!--     
+            <a class="hidden-print" href="{{shortUrl}}"><span title="trykk for &aring; g&aring; til saken" class="glyphicon glyphicon-link trello-sak-link hidden-print">link</span></a>
+        -->
+        </h2></div>
         <div class="row"  id="kortcontent_name_{{id}}">
-            <ul class="trello-member-list">{{#fullNames}}<li class="trello-member">{{.}}</li>{{/fullNames}}</ul>
-            <div class="trello-label-list">{{#labels}}<span class="trello-label {{color}}">&nbsp;{{name}}&nbsp;</span>&nbsp;{{/labels}}</div>
+            <p class="trello-member-list">{{#fullNames}}<span class="trello-member">{{.}}</span>{{/fullNames}}</p>
+            <p class="trello-label-list">{{#labels}}<span class="trello-label {{color}}">&nbsp;{{name}}&nbsp;</span>&nbsp;{{/labels}}</p>
         </div>
-        <div class="row"  id="kortcontent_{{id}}"><div class="beskrivelse">{{{descHtml}}}</div></div>
+        <div class="row"  id="kortcontent_{{id}}"><p class="">{{{descHtml}}}</p></div>
     {{/.}}
 </script>
 <div class="container container-fluid">
     <div id="lister"></div>
-    <div class="row footer">
+    <p class="row footer">
         Referat genereres basert p&aring; salgs trello-tavle. All informasjon er konfidensiell og kan ikke videreformidles til andre enn BEKK-ansatte.
-    </div>
+    </p>
     <div></div>
 </div>
 <script language="javascript">
 var loginFailed = function() {
   window.location.href = "index.html";
 };
+onAuthorize();
+function onAuthorize(){
  Trello.authorize({
       name: "TrelloExport",
       type: "popup",
@@ -62,6 +62,7 @@ var loginFailed = function() {
                 Trello.rest("GET", cmdboard, visLister);
                 }
     });
+};
 </script>
 
 <script>
@@ -74,5 +75,8 @@ var loginFailed = function() {
   ga('send', 'pageview');
 
 </script>
+
+ <button id="get-board" class="btn" onclick="Trello.authorize({name: 'TrelloExport', type: 'popup', success: onAuthorize, error: onError, account:true  });">Hent board</button>
+    <button id="log-out" class="btn" onclick="Trello.deauthorize();">Log ut</button>
 </body>
 </html>

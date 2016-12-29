@@ -31,33 +31,67 @@ li.trello-member:last-child:after {
     -webkit-margin-start: 0em;
     -webkit-padding-start: 0px;
 }
+
 .dato {
     text-transform: lowercase;
 }
-.beskrivelse h1 {
-    font-size: 20px;
-    padding-top: 5px;
-    border-bottom:0px;
-}
-.beskrivelse h2 {
-    font-size: 18px;
-    padding-top: 2px;
-}
-.beskrivelse h3 {
-    font-size: 16px;
-    padding-top: 2px;
-}
+
 
 h1 {
+	font-family: Georgia, Times, "Times New Roman", serif;
+	font-size: 24px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 500;
+	line-height: 26.4px;
     border-bottom: solid 1px;
 }
+h3 {
+	font-family: Georgia, Times, "Times New Roman", serif;
+	font-size: 14px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 500;
+	line-height: 15.4px;
+        float: left;
+    clear: both;
+}
+p {
+	font-family: Georgia, Times, "Times New Roman", serif;
+	font-size: 14px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 400;
+	line-height: 20px;
+}
+blockquote {
+	font-family: Georgia, Times, "Times New Roman", serif;
+	font-size: 21px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 400;
+	line-height: 30px;
+}
+pre {
+	font-family: Georgia, Times, "Times New Roman", serif;
+	font-size: 13px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 400;
+	line-height: 18.5714px;
+}
+
 h2 {
     clear: both;
-    font-size:24px;
-}
-h3 {
-    float: left;
-    clear: both;
+    font-size:18px;
+    font-family: Georgia, Times, "Times New Roman", serif;
+	font-size: 18px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 500;
+	line-height: 18.4px;
+    padding-top: 10px;
+        float: left;
 }
 
 .frist {
