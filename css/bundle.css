@@ -24,7 +24,7 @@
 html,
 body {
   padding: 0;
-  margin: 0;
+  margin: 5px;
   font-family: sans-serif;
   -webkit-font-smoothing: antialiased;
   line-height: 1.625;
@@ -377,25 +377,28 @@ h4 a,
 }
 h1,
 .h1 {
-  margin-bottom: 0.5em;
-  font-size: 3.4rem;
+  margin-bottom: 1.0em;
+  font-size: 1.4rem;
+  text-decoration: underline;
 }
 h2,
 .h2 {
+  margin-top: 1.0em;
   margin-bottom: 0.2em;
-  font-size: 2.4rem;
+  font-size: 1.0rem;
+  text-decoration: underline;
 }
 h3,
 .h3 {
   margin-top: 1em;
   margin-bottom: 0.2em;
-  font-size: 2rem;
+  font-size: 0.8rem;
 }
 h4,
 .h4 {
   margin-bottom: 0.5em;
   font-family: "Conduit ITC W01 Regular", Arial, sans-serif;
-  font-size: 2.4rem;
+  font-size: 0.6rem;
   font-weight: normal;
 }
 /* Typography
@@ -480,14 +483,7 @@ h4,
   .t-sectionHeader span:after {
     top: 9px;
   }
-  h1,
-  .h2 {
-    font-size: 18px;
-  }
-  h2,
-  .h2 {
-    font-size: 16px;
-  }
+ 
 
 label {
   display: inline-block;
@@ -569,7 +565,7 @@ label {
 ------------------------------------------------------------------------------*/
 
 
-body {
+body, p {
   font-family: "Fedra Serif", Georgia, serif;
   font-weight: 100;
   font-size: 10px;

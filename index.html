@@ -18,18 +18,18 @@
 <body>
 <script id="list-template" type="text/template">
     {{#.}}
-        <header class="t-sectionHeader"><span data-id="{{id}}" id="{{id}}">{{name}}</span></header>
+        <h2 class="h2"><span data-id="{{id}}" id="{{id}}">{{name}}</span></h2>
         <p id="kort_{{id}}">Ingen saker registrert</p>
     {{/.}}
 </script>
 <script id="kort-template" type="text/template">
-    {{#.}} <div class="row"><h2 class="h2">Sak {{idShort}}: {{name}}&nbsp;
+    {{#.}} <div class="row"><h3 class="h3">Sak {{idShort}}: {{name}}&nbsp;
         <!--     
             <a class="hidden-print" href="{{shortUrl}}"><span title="trykk for &aring; g&aring; til saken" class="glyphicon glyphicon-link trello-sak-link hidden-print">link</span></a>
         -->
-        </h2></div>
+        </h3></div>
         <div class="row"  id="kortcontent_name_{{id}}">
-            <p class="trello-member-list">{{#fullNames}}<span class="trello-member">{{.}}</span>{{/fullNames}}</p>
+           <!-- <p class="trello-member-list">{{#fullNames}}<span class="trello-member">{{.}}</span>{{/fullNames}}</p> -->
             <p class="trello-label-list">{{#labels}}<span class="trello-label {{color}}">&nbsp;{{name}}&nbsp;</span>&nbsp;{{/labels}}</p>
         </div>
         <div class="row"  id="kortcontent_{{id}}"><p class="">{{{descHtml}}}</p></div>
