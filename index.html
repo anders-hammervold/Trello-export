@@ -30,7 +30,7 @@
         </h3></div>
         <div class="row"  id="kortcontent_name_{{id}}">
            <!-- <p class="trello-member-list">{{#fullNames}}<span class="trello-member">{{.}}</span>{{/fullNames}}</p> -->
-            <p class="trello-label-list">{{#labels}}<span class="trello-label {{color}}">&nbsp;{{name}}&nbsp;</span>&nbsp;{{/labels}}</p>
+            <p class="trello-label-list" id="labels_{{id}}">{{#labels}}<span class="trello-label {{color}}">&nbsp;{{name}}&nbsp;</span>&nbsp;{{/labels}}</p>
         </div>
         <div class="row"  id="kortcontent_{{id}}"><p class="">{{{descHtml}}}</p></div>
     {{/.}}
@@ -40,7 +40,6 @@
     <p class="row footer">
         Referat genereres basert p&aring; salgs trello-tavle. All informasjon er konfidensiell og kan ikke videreformidles til andre enn BEKK-ansatte.
     </p>
-    <div></div>
 </div>
 <script language="javascript">
 var loginFailed = function() {

@@ -25,9 +25,12 @@ $("#log-out").click(function(){
 
 var visLister=function (lister) {
     		    var template = $('#list-template').html();
-    		    var info = Mustache.to_html(template, lister);
+                var filteredlists=lister.filter(function (item) {
+                    return (item.name.indexOf("Konfidensielt")<0)
+                })
+    		    var info = Mustache.to_html(template, filteredlists);
     		    $('#lister').html(info);
-    		    hentKortForLister(lister);
+    		    hentKortForLister(filteredlists);
 };
 
 var hentKortForLister = function (lister) {
@@ -40,7 +43,9 @@ var hentKortForLister = function (lister) {
 };
 
 var visKort=function (kortListe, listeId) {
+    var labels=Array(0)
     if (kortListe.length>0) {
+        labels=Array(kortListe.length);
         var converter = new showdown.Converter();
         var template = $('#kort-template').html();
 
@@ -50,6 +55,13 @@ var visKort=function (kortListe, listeId) {
                 enkeltkort.descHtml="&lt;Ingen informasjon registrert&gt;"
             }
             setMembersFullnames(enkeltkort);
+
+            if (enkeltkort.labels===null || enkeltkort.labels.length===0){
+                var id="#labels_" + enkeltkort.id;
+                labels.push(id);
+            }
+        
+    
         });
 
         var div="#kort_" + listeId;
@@ -57,6 +69,11 @@ var visKort=function (kortListe, listeId) {
 
         $(div).empty();
         $(div).html(info);
+
+        labels.forEach(function(label) {
+                $(label).remove();
+        });
+
     }
 };
 
